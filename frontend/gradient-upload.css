@@ -1,0 +1,224 @@
+/* Ambient Glow Container */
+.ambient-glow {
+  position: relative;
+  isolation: isolate;
+  border-radius: 999px;
+  max-width: 36rem;
+  width: 100%;
+  margin: 0;
+}
+
+.ambient-glow::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #0ea5e9, #2dd4bf 45%, #fde047 82%, #0ea5e9);
+  background-size: 250% 250%;
+  animation: glow-breathe 4.8s ease-in-out infinite;
+  filter: blur(3px) brightness(1.25) saturate(1.2);
+  opacity: 0.9;
+  transition: opacity 0.3s;
+}
+
+@keyframes glow-breathe {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.upload-card {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background-color: var(--panel, #ffffff);
+  border: 1px solid var(--line, #e5e7eb);
+  color: var(--ink, #000);
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s, padding-bottom 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
+}
+.upload-card:focus-visible {
+  outline: 2px solid var(--accent, #000);
+}
+
+.upload-card.dragging .drag-surface {
+  opacity: 0.2;
+  transform: scale(1);
+}
+.drag-surface {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-color: #0ea5e9;
+  opacity: 0;
+  transform: scale(0.98);
+  transition: opacity 0.25s, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.upload-progress-bg {
+  position: absolute;
+  inset-y: 0;
+  left: 0;
+  z-index: 0;
+  background-color: #0ea5e9;
+  width: 0%;
+  opacity: 0;
+  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s;
+  pointer-events: none;
+}
+
+.upload-card.has-file .upload-progress-bg {
+  opacity: 0.08;
+}
+
+.upload-content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+}
+
+.file-icon-box {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background-color: var(--plane);
+  transition: all 0.3s;
+}
+.upload-card.has-file .file-icon-box {
+  background-color: var(--panel);
+  border-color: var(--panel);
+}
+
+.file-icon-box svg {
+  width: 16px;
+  height: 16px;
+  stroke: var(--ink);
+  stroke-width: 1.8;
+  fill: none;
+}
+.file-icon-box span {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-2);
+  margin-top: 1px;
+}
+
+.file-info {
+  flex: 1;
+  min-width: 0;
+}
+.file-info p {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.25;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.file-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--ink-2);
+  margin-top: 2px;
+}
+
+.action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.action-btn {
+  width: 32px !important;
+  height: 32px !important;
+  padding: 0 !important;
+  border-radius: 50% !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-upload {
+  background-color: rgba(20, 24, 31, 0.65) !important; /* Translucent dark background */
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(20, 24, 31, 0.15) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  color: #fff !important;
+}
+.btn-upload:hover {
+  background-color: rgba(20, 24, 31, 0.85) !important;
+}
+.btn-upload svg { stroke: #fff !important; filter: drop-shadow(0 1px 1px rgba(0,0,0,0.3)); }
+
+.btn-remove {
+  background-color: rgba(255, 255, 255, 0.4) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05), inset 0 1px 1px rgba(255, 255, 255, 0.8);
+  color: var(--ink-2);
+}
+.btn-remove:hover {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+  color: var(--ink);
+}
+
+.progress-bar-container {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 14px;
+  z-index: 10;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.28s, transform 0.28s;
+  pointer-events: none;
+}
+.upload-card.has-file .progress-bar-container {
+  opacity: 1;
+  transform: translateY(0);
+}
+.upload-card.has-file {
+  padding-bottom: 40px;
+}
+
+.progress-track {
+  height: 6px;
+  width: 100%;
+  border-radius: 99px;
+  background-color: var(--plane);
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background-color: #0ea5e9;
+  width: 0%;
+  transition: width 0.28s ease-out, background-color 0.3s;
+}
+.progress-fill.success { background-color: #10b981; }
+.progress-fill.error { background-color: #ef4444; }

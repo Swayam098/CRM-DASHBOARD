@@ -1,0 +1,37 @@
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# MLflow
+mlruns/
+mlflow.db
+mlflow.db-journal
+
+# Data (Ignore local datasets)
+data/*.csv
+data/*.parquet
+data/*.db
+data/*.sqlite
+!data/.keep
+
+# Python/IDE
+.pytest_cache/
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Temp Scratch Scripts
+script_convert.py
+smoke_test.py

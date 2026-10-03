@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sign in · CRM Analytics</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="login-plane">
+    <form class="login-card" id="form">
+      <div class="mark">CRM Analytics</div>
+      <p>Sign in to the customer value desk.</p>
+      <div class="error" id="err"></div>
+      <label for="u">Username</label>
+      <input id="u" name="username" autocomplete="username" autofocus required>
+      <label for="p">Password</label>
+      <input id="p" name="password" type="password" autocomplete="current-password" required>
+      <button type="submit">Sign in</button>
+    </form>
+  </main>
+  <script>
+    if (localStorage.getItem("crm_token")) location.replace("index.html");
+    document.getElementById("form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const err = document.getElementById("err");
+      err.textContent = "";
+      const body = new URLSearchParams({
+        username: document.getElementById("u").value,
+        password: document.getElementById("p").value,
+      });
+      const res = await fetch("/login", { method: "POST", body });
+      if (!res.ok) { err.textContent = "Incorrect username or password."; return; }
+      const { access_token } = await res.json();
+      localStorage.setItem("crm_token", access_token);
+      location.replace("index.html");
+    });
+  </script>
+</body>
+</html>
